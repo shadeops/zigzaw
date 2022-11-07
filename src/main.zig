@@ -67,7 +67,7 @@ pub const Frog = struct {
     }
 };
 
-pub const TexturedFrog = struct {
+const TexturedFrog = struct {
     frog: Frog,
     tex: ray.Texture,
     free: bool,
@@ -75,14 +75,14 @@ pub const TexturedFrog = struct {
 
 // Various measurements and dimensions
 
-// The ratio of a hex with pointing sides pointing up is
+// The ratio of a hex with the pointy side pointing up is
 // sqrt(3) : 2  (x : y)
 // But we'll normalize our x coordinate so we'll be working with the following -
-// Wwdth & height of a hex
+// Width & height of a hex
 const hex_width = 1.0;
 const hex_height = 2.0 / @sqrt(3.0);
 
-// Distance to the next hex column is 1 hex.
+// Distance to the hex one column over is 1 hex.
 const hex_col_width = hex_width;
 // Distance to the next hex row is 3/4th a hex
 const hex_row_height = hex_height * 3.0 / 4.0;
@@ -95,8 +95,8 @@ const hex_row_height = hex_height * 3.0 / 4.0;
 // Every other row has an offset of half the hex_width
 const hex_row_col_offset = hex_width / 2.0;
 
-// Because some of the offsets on the board are based on the frog and not the hex we
-// need to define the size of the frog relative to the hex.
+// The board doesn't end nicely on the edge of a hex.
+// So we need to define the size of the frog relative to a hex.
 // Using the Rubik lines on the frog we can see that a hex contains 6 Rubik divisions
 const frog_divs_x = 9.0;
 const frog_divs_y = 7.0;
@@ -118,8 +118,8 @@ const board_hex_offset = frog_hex_div_height * 2.0;
 const board_hex_height = 10.0 * hex_row_height + board_hex_offset;
 
 // Frog UV coordinates within "frog space" is from the frog's feet to nose in the x-axis
-// and from the outer parts of the frog's arms.
-// We'll use the frog_divs to as a ruler to pick the center of the Rubix patches
+// and from the outer edges of the frog's arms.
+// We'll use the frog_divs to as a ruler to pick the center of the Rubik side. 
 const body_uv = ray.Vector2{ .x = 6.0 / frog_divs_x, .y = 0.5 };
 const left_arm_uv = ray.Vector2{ .x = 6.5 / frog_divs_x, .y = 0.75 / frog_divs_y };
 const left_side_uv = ray.Vector2{ .x = 5.5 / frog_divs_x, .y = 0.75 / frog_divs_y };
